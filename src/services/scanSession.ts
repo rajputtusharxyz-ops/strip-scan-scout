@@ -1,0 +1,87 @@
+/**
+ * In-memory scan session. Nothing here is persisted; refresh/close clears it.
+ */
+import { useSyncExternalStore } from "react";
+import type { Bounds, QualityReport, Scan } from "@/types/scan";
+import type { PadId } from "@/types/referenceConfig";
+import { getPixels, loadImage } from "@/lib/image";
+import { detectStrip } from "./stripDetection";
+import { assessQuality } from "./imageQuality";
+import { matchPads } from "./colorMatching";
+import { getActiveConfiguration } from "./referenceConfigService";
+
+export type Session = {
+  image?: string;
+  source?: "camera" | "upload";
+  quality?: QualityReport;
+  bounds?: Record<PadId, Bounds>;
+  result?: Scan;
+};
+
+let session: Session = {};
+const listeners = new Set<() => void>();
+const set = (s: Session) => { session = s; listeners.forEach((l) => l()); };
+
+export const scanSession = {
+  get: () => session,
+  reset: () => set({}),
+  update: (patch: Partial<Session>) => set({ ...session, ...patch }),
+  subscribe: (l: () => void) => { listeners.add(l); return () => listeners.delete(l); },
+};
+
+export function useScanSession() {
+  return useSyncExternalStore(scanSession.subscribe, scanSession.get, scanSession.get);
+}
+
+const ANALYSIS_SIDE = 480;
+
+export async function runQualityCheck(image: string) {
+  const img = await loadImage(image);
+  if (Math.min(img.naturalWidth, img.naturalHeight) < 200) {
+    throw new Error("This image is too small to read. Please use a photo at least 320 pixels wide.");
+  }
+  const px = getPixels(img, ANALYSIS_SIDE);
+  const det = detectStrip(px);
+  const quality = assessQuality(px, det);
+  const defaults: Record<PadId, Bounds> = {
+    "pad-a": det.pads[0] ?? { x: 0.4, y: 0.15, width: 0.2, height: 0.1 },
+    "pad-b": det.pads[1] ?? { x: 0.4, y: 0.3, width: 0.2, height: 0.1 },
+  };
+  return { quality, bounds: defaults };
+}
+
+export async function runAnalysis(): Promise<Scan> {
+  const { image, bounds, quality, source } = session;
+  if (!image || !bounds || !quality) throw new Error("No photo to analyse.");
+  const img = await loadImage(image);
+  const px = getPixels(img, ANALYSIS_SIDE);
+  const config = getActiveConfiguration();
+  const pads = matchPads(px, bounds, config);
+  const allMatched = pads.every((p) => p.resultLevel);
+  const anySampled = pads.every((p) => p.matchConfidence !== undefined);
+  const scan: Scan = {
+    id: crypto.randomUUID(),
+    createdAt: new Date().toISOString(),
+    source: source ?? "upload",
+    image,
+    quality: { score: quality.score, label: quality.label, checks: quality.checks },
+    configuration: { id: config.id, status: config.status, lotNumber: config.lotNumber },
+    pads,
+    state: !anySampled ? "cannot-analyse" : allMatched ? "estimate-available" : "needs-better-photo",
+  };
+  set({ ...session, result: scan });
+  return scan;
+}
+
+/** Draws a clean synthetic strip photo so the full flow can be tried without a real strip. */
+export function createSamplePhoto(): string {
+  const c = document.createElement("canvas");
+  c.width = 720; c.height = 1080;
+  const ctx = c.getContext("2d")!;
+  ctx.fillStyle = "#F2F1EE"; ctx.fillRect(0, 0, c.width, c.height);
+  ctx.fillStyle = "rgba(0,0,0,0.06)"; ctx.fillRect(318, 136, 96, 820);
+  ctx.fillStyle = "#FBFBFA"; ctx.fillRect(312, 130, 96, 820);
+  ctx.fillStyle = "#BBD4C9"; ctx.fillRect(322, 170, 76, 76);
+  ctx.fillStyle = "#E6DC9C"; ctx.fillRect(322, 270, 76, 76);
+  return c.toDataURL("image/jpeg", 0.92);
+}
