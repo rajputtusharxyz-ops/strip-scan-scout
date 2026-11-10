@@ -38,7 +38,7 @@ function HistoryPage() {
   const navigate = useNavigate();
   return (
     <PageContainer narrow>
-      <h1 className="text-3xl font-bold">Saved scans</h1>
+      <h1 className="text-3xl font-semibold">Saved scans</h1>
       <p className="mt-2 text-muted-foreground">Stored only in this browser. Not a medical record.</p>
       <div className="mt-6">
         {items === null ? null : items.length === 0 ? (

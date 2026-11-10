@@ -72,7 +72,7 @@ function ScanPage() {
       {stage === "prepare" && (
         <>
           <ProgressHeader step={1} label="Prepare" />
-          <h1 className="text-3xl font-bold">Before you take the photo</h1>
+          <h1 className="text-3xl font-semibold">Before you take the photo</h1>
           <p className="mt-2 text-muted-foreground">Cybow2AC Strip App reads <strong className="text-foreground">one strip per photo</strong>. A few checks now prevent unusable images.</p>
           <ol className="mt-6 space-y-3">
             {CHECKLIST.map((c, i) => (
@@ -106,7 +106,7 @@ function ScanPage() {
       {stage === "check" && (
         <>
           <ProgressHeader step={3} label="Check photo" onBack={() => setStage("capture")} />
-          <h1 className="text-2xl font-bold">Is this photo usable?</h1>
+          <h1 className="text-2xl font-semibold">Is this photo usable?</h1>
           <div className="mt-5 grid gap-5 md:grid-cols-[minmax(0,240px)_1fr]">
             {session.image && <img src={session.image} alt="Your captured strip photo" className="max-h-80 w-full rounded-xl border bg-card object-contain" />}
             <div className="space-y-4">
@@ -139,7 +139,7 @@ function ScanPage() {
       {stage === "review" && session.image && session.bounds && (
         <>
           <ProgressHeader step={4} label="Confirm pad areas" onBack={() => setStage("check")} />
-          <h1 className="text-2xl font-bold">Confirm the two pad outlines</h1>
+          <h1 className="text-2xl font-semibold">Confirm the two pad outlines</h1>
           <p className="mt-2 text-muted-foreground">Check that the strip and both pads are clearly visible and that only one strip is in the photo. The analysis service locates the albumin and creatinine pads itself; these outlines are for your review.</p>
           <div className="mt-5">
             <StripOverlayEditor image={session.image} bounds={session.bounds} onChange={(bounds) => scanSession.update({ bounds })} />

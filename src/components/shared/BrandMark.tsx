@@ -15,7 +15,7 @@ export function BrandMark() {
   return (
     <span className="flex items-center gap-2.5">
       <StripIcon />
-      <span className="font-heading text-lg font-bold tracking-tight">{APP_NAME}</span>
+      <span className="font-heading text-lg font-semibold tracking-tight">{APP_NAME}</span>
     </span>
   );
 }

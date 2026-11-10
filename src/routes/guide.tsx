@@ -49,13 +49,13 @@ const FAQ = [
 function GuidePage() {
   return (
     <PageContainer narrow>
-      <h1 className="text-3xl font-bold md:text-4xl">How to use Cybow2AC Strip App</h1>
+      <h1 className="text-3xl font-semibold md:text-4xl">How to use Cybow2AC Strip App</h1>
       <SafetyNotice className="mt-5" title="Placeholder content">
         The timing and interpretation below are placeholders until your CYBOW 2AC instructions are added and validated.
       </SafetyNotice>
 
       <section className="mt-10" aria-labelledby="steps">
-        <h2 id="steps" className="text-2xl font-bold">Step by step</h2>
+        <h2 id="steps" className="text-2xl font-semibold">Step by step</h2>
         <ol className="mt-6">
           {STEPS.map((s, i) => (
             <li key={s.t} className="relative flex gap-4 pb-7 last:pb-0">
@@ -73,7 +73,7 @@ function GuidePage() {
       </section>
 
       <section id="photo-tips" className="mt-12 scroll-mt-20" aria-labelledby="photos">
-        <h2 id="photos" className="text-2xl font-bold">Good photo / poor photo</h2>
+        <h2 id="photos" className="text-2xl font-semibold">Good photo / poor photo</h2>
         <div className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-4">
           {([["good", "Good: one strip, even light", true], ["warm", "Poor: yellow light", false], ["shadow", "Poor: heavy shadow", false], ["multiple", "Poor: several strips", false]] as const).map(([v, l, ok]) => (
             <figure key={v} className="card-surface p-2">
@@ -87,7 +87,7 @@ function GuidePage() {
       </section>
 
       <section className="mt-12" aria-labelledby="issues">
-        <h2 id="issues" className="text-2xl font-bold">Common issues</h2>
+        <h2 id="issues" className="text-2xl font-semibold">Common issues</h2>
         <dl className="mt-5 grid gap-3 sm:grid-cols-2">
           {ISSUES.map(([t, d]) => (
             <div key={t} className="rounded-lg border bg-card p-4">
@@ -99,13 +99,13 @@ function GuidePage() {
       </section>
 
       <section className="card-surface mt-12 p-5" aria-labelledby="pads">
-        <h2 id="pads" className="text-xl font-bold">About the two pads</h2>
+        <h2 id="pads" className="text-xl font-semibold">About the two pads</h2>
         <p className="mt-1 text-sm font-semibold text-caution">Placeholder</p>
         <p className="mt-2 leading-relaxed">CYBOW 2AC is commonly described as a two-parameter strip. It has an albumin pad and a creatinine pad. Cybow2AC Strip App estimates both concentrations in mg/L and the albumin-to-creatinine ratio (ACR). It does not label results as normal or abnormal.</p>
       </section>
 
       <section className="mt-12" aria-labelledby="faq">
-        <h2 id="faq" className="text-2xl font-bold">Frequently asked questions</h2>
+        <h2 id="faq" className="text-2xl font-semibold">Frequently asked questions</h2>
         <Accordion type="single" collapsible className="mt-4 card-surface px-5">
           {FAQ.map(([q, a]) => (
             <AccordionItem key={q} value={q}>
@@ -117,7 +117,7 @@ function GuidePage() {
       </section>
 
       <section id="safety" className="mt-12 scroll-mt-20 space-y-3" aria-labelledby="safety-h">
-        <h2 id="safety-h" className="text-2xl font-bold">Safety and privacy</h2>
+        <h2 id="safety-h" className="text-2xl font-semibold">Safety and privacy</h2>
         <SafetyNotice title="Screening estimate only.">{SAFETY_TEXT}</SafetyNotice>
         <SafetyNotice variant="urgent-placeholder" title="When to get help">{WHEN_TO_GET_HELP}</SafetyNotice>
         <SafetyNotice variant="standard" title="Privacy">When you start analysis, your photo is sent securely to the analysis service for that scan and is not saved by default. Nothing is kept on this device unless you choose to save it. Cybow2AC Strip App never asks for your name, date of birth, patient number or location. Browser storage is not a substitute for a medical record.</SafetyNotice>
