@@ -45,8 +45,13 @@ export function analysisServiceUrl(): string | undefined {
   return u ? u.replace(/\/$/, "") : undefined;
 }
 
-async function dataUrlToBlob(dataUrl: string) {
-  return (await fetch(dataUrl)).blob();
+function dataUrlToBlob(dataUrl: string): Blob {
+  const [head, body = ""] = dataUrl.split(",");
+  const mime = /data:([^;]+)/.exec(head)?.[1] ?? "image/jpeg";
+  const bin = atob(body);
+  const bytes = new Uint8Array(bin.length);
+  for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+  return new Blob([bytes], { type: mime });
 }
 
 /** Sends one image to the fixed inference service. Never fabricates a result. */
@@ -54,7 +59,7 @@ export async function analyzeImage(image: string, fetchImpl: typeof fetch = fetc
   if (!baseUrl) return failure("analysis_unavailable", "not_configured", "The analysis service is not connected yet.");
   let res: Response;
   try {
-    const blob = await dataUrlToBlob(image);
+    const blob = dataUrlToBlob(image);
     const form = new FormData();
     form.append("image", blob, `strip.${blob.type.split("/")[1] || "jpg"}`);
     res = await fetchImpl(`${baseUrl}/api/analyze`, { method: "POST", body: form });
