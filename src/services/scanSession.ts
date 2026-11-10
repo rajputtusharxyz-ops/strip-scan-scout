@@ -14,7 +14,7 @@ export type Session = {
   source?: "camera" | "upload";
   quality?: QualityReport;
   bounds?: Record<PadId, Bounds>;
-  result?: Scan;
+  result?: Scan | undefined;
 };
 
 let session: Session = {};

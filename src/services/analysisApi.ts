@@ -17,10 +17,10 @@ export function failure(status: Exclude<AnalysisResponse["status"], "complete">,
  */
 export function normalizeResponse(raw: unknown): AnalysisResponse {
   if (!raw || typeof raw !== "object") return failure("error", "bad_response", "The analysis service returned an unreadable response.");
-  const r = raw as Record<string, unknown>;
+  const r = raw as Partial<Record<keyof AnalysisResponse, unknown>>;
   const status = ANALYSIS_STATUSES.includes(r.status as never) ? (r.status as AnalysisResponse["status"]) : null;
   if (!status) return failure("error", "bad_response", "The analysis service returned an unknown status.");
-  const dc = (r.detectionConfidence ?? {}) as Record<string, unknown>;
+  const dc = (r.detectionConfidence ?? {}) as { albumin?: unknown; creatinine?: unknown };
   const base: AnalysisResponse = {
     status,
     albuminMgL: null, creatinineMgL: null, acr: null,
@@ -41,13 +41,13 @@ export function normalizeResponse(raw: unknown): AnalysisResponse {
 export const isComplete = (a: AnalysisResponse): a is CompleteAnalysis => a.status === "complete";
 
 export function analysisServiceUrl(): string | undefined {
-  const u = import.meta.env.VITE_ANALYSIS_API_URL as string | undefined;
+  const u = import.meta.env["VITE_ANALYSIS_API_URL"] as string | undefined;
   return u ? u.replace(/\/$/, "") : undefined;
 }
 
 function dataUrlToBlob(dataUrl: string): Blob {
   const [head, body = ""] = dataUrl.split(",");
-  const mime = /data:([^;]+)/.exec(head)?.[1] ?? "image/jpeg";
+  const mime = /data:([^;]+)/.exec(head ?? "")?.[1] ?? "image/jpeg";
   const bin = atob(body);
   const bytes = new Uint8Array(bin.length);
   for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
