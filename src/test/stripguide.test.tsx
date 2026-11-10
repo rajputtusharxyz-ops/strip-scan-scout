@@ -2,11 +2,8 @@ import { describe, expect, it, beforeEach } from "vitest";
 import { render, screen } from "@testing-library/react";
 import { detectStrip, type PixelData } from "@/services/stripDetection";
 import { assessQuality } from "@/services/imageQuality";
-import { demoReferenceConfig } from "@/data/demoReferenceConfig";
-import { configurationStatusLabel } from "@/services/referenceConfigService";
 import { SafetyNotice } from "@/components/shared/SafetyNotice";
 import { DEFAULT_SAVE_CHOICE } from "@/components/results/ConsentSaveDialog";
-import { ResultCard } from "@/components/results/ResultCard";
 import { localHistory } from "@/services/localHistory";
 import type { Scan } from "@/types/scan";
 
@@ -47,18 +44,6 @@ describe("image rejection", () => {
   });
 });
 
-describe("demo configuration", () => {
-  it("is labelled demo and not validated", () => {
-    expect(demoReferenceConfig.stripName).toBe("CYBOW 2AC — Demo only");
-    expect(demoReferenceConfig.status).toBe("demo");
-    expect(configurationStatusLabel(demoReferenceConfig)).toBe("Demo configuration — not validated for clinical use.");
-  });
-  it("uses neutral Pad A / Pad B and demo levels 1–3", () => {
-    expect(demoReferenceConfig.pads.map((p) => p.label)).toEqual(["Pad A", "Pad B"]);
-    for (const p of demoReferenceConfig.pads) expect(p.levels.map((l) => l.displayName)).toEqual(["Demo level 1", "Demo level 2", "Demo level 3"]);
-  });
-});
-
 describe("safety notice", () => {
   it("has no dismiss control", () => {
     render(<SafetyNotice title="Screening estimate only." />);
@@ -75,9 +60,7 @@ describe("saving consent", () => {
 const scan: Scan = {
   id: "s1", createdAt: new Date().toISOString(), source: "upload", image: "data:image/jpeg;base64,xx",
   quality: { score: 100, label: "Good", checks: [] },
-  configuration: { id: demoReferenceConfig.id, status: "demo" },
-  pads: [{ id: "pad-a", bounds: { x: 0, y: 0, width: 0.1, height: 0.1 }, sampledColor: "#BBD4C9", resultLevel: "a2", matchConfidence: 86 }],
-  state: "estimate-available",
+  analysis: { status: "complete", albuminMgL: 30, creatinineMgL: 1000, acr: 30, detectionConfidence: { albumin: 0.9, creatinine: 0.9 }, capturedAt: new Date().toISOString(), analysisBuild: "t", errorCode: null, message: null },
 };
 
 describe("local history", () => {
@@ -95,12 +78,3 @@ describe("local history", () => {
   });
 });
 
-describe("result card", () => {
-  it("shows demo level, match and unconfirmed reference", () => {
-    render(<ResultCard pad={demoReferenceConfig.pads[0]} result={scan.pads[0]} validated={false} />);
-    const card = screen.getByTestId("result-pad-a");
-    expect(card).toHaveTextContent("Demo level 2");
-    expect(card).toHaveTextContent("86%");
-    expect(card).toHaveTextContent("Confirmed referenceNo");
-  });
-});
