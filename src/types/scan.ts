@@ -26,7 +26,7 @@ export type Scan = {
   id: string;
   createdAt: string;
   source: "camera" | "upload";
-  image?: string;
+  image?: string | undefined;
   quality: { score: number; label: QualityReport["label"]; checks: QualityCheck[] };
   analysis: AnalysisResponse;
   savedConsent?: "result-only" | "result-and-photo";

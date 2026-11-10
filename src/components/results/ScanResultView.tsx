@@ -44,7 +44,7 @@ function ResultRow({ label, value, unit }: { label: string; value: number; unit?
   );
 }
 
-function NoResult({ analysis, onRetry }: { analysis: AnalysisResponse; onRetry?: () => void }) {
+function NoResult({ analysis, onRetry }: { analysis: AnalysisResponse; onRetry?: (() => void) | undefined }) {
   if (analysis.status === "analysis_unavailable") {
     return (
       <ErrorState icon={CloudOff} title="Analysis service is unavailable" action={<>{onRetry && <Button onClick={onRetry}><RotateCcw strokeWidth={1.5} /> Try again</Button>}<Button variant="outline" asChild><Link to="/scan">Retake photo</Link></Button></>}>
@@ -63,7 +63,7 @@ function NoResult({ analysis, onRetry }: { analysis: AnalysisResponse; onRetry?:
   );
 }
 
-export function ScanResultView({ scan, saved = false, onRetry }: { scan: Scan; saved?: boolean; onRetry?: () => void }) {
+export function ScanResultView({ scan, saved = false, onRetry }: { scan: Scan; saved?: boolean; onRetry?: (() => void) | undefined }) {
   const [saveOpen, setSaveOpen] = useState(false);
   const [isSaved, setIsSaved] = useState(saved);
   const a = scan.analysis;
