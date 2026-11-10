@@ -7,7 +7,7 @@ import { PageContainer } from "@/components/shared/AppShell";
 import { EmptyState } from "@/components/shared/States";
 import { shareOrDownload } from "@/components/results/ScanResultView";
 import { localHistory } from "@/services/localHistory";
-import { formatCaptured, levelName } from "@/services/summary";
+import { formatCaptured, shortResult } from "@/services/summary";
 import type { Scan } from "@/types/scan";
 
 export const Route = createFileRoute("/history")({
@@ -52,7 +52,7 @@ function HistoryPage() {
                 {s.image ? <img src={s.image} alt="" className="h-14 w-14 rounded-md border object-cover" /> : <span className="grid h-14 w-14 place-items-center rounded-md bg-muted"><History className="h-5 w-5 text-muted-foreground" strokeWidth={1.5} aria-hidden="true" /></span>}
                 <div className="min-w-0 flex-1">
                   <p className="tabular font-semibold">{formatCaptured(s.createdAt)}</p>
-                  <p className="truncate text-sm text-muted-foreground">Pad A: {levelName(s, "pad-a")} · Pad B: {levelName(s, "pad-b")}</p>
+                  <p className="truncate text-sm text-muted-foreground">{shortResult(s)}</p>
                   <p className="text-sm text-muted-foreground">Photo quality: {s.quality.label}</p>
                 </div>
                 <DropdownMenu>
