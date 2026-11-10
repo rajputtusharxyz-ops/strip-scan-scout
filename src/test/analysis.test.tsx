@@ -6,6 +6,7 @@ import { runAnalysis, scanSession } from "@/services/scanSession";
 import { ScanResultView } from "@/components/results/ScanResultView";
 import { ANALYSIS_STATUSES } from "@/types/analysis";
 import type { Scan } from "@/types/scan";
+import { Route as SettingsRoute } from "@/routes/settings";
 
 const IMG = "data:image/png;base64,iVBORw0KGgo=";
 const ok = { status: "complete", albuminMgL: 30, creatinineMgL: 1000, acr: 30, detectionConfidence: { albumin: 0.91, creatinine: 0.88 }, capturedAt: "2026-01-01T10:00:00Z", analysisBuild: "b1", errorCode: null, message: null };
@@ -68,10 +69,22 @@ describe("results screen", () => {
 describe("no stale data", () => {
   beforeEach(() => scanSession.reset());
   it("replaces a previous complete result with the new error", async () => {
-    scanSession.update({ image: IMG, quality: { score: 100, label: "Good", checks: [], passed: true } });
+    scanSession.update({ image: IMG, quality: { score: 100, label: "Good", checks: [], passed: true }, result: scanWith(normalizeResponse(ok)) });
     // service not configured in tests → unavailable
     const first = await runAnalysis(respond(ok));
     expect(first.analysis.status).toBe("analysis_unavailable");
     expect(scanSession.get().result?.analysis.albuminMgL).toBeNull();
+  });
+});
+
+describe("settings", () => {
+  it("exposes no model, demo or configuration controls", async () => {
+    const Settings = SettingsRoute.options.component!;
+    renderInRouter(<Settings />);
+    await screen.findByText("Analysis service");
+    expect(screen.queryAllByRole("switch")).toHaveLength(0);
+    expect(screen.queryAllByRole("combobox")).toHaveLength(0);
+    expect(screen.queryAllByRole("radio")).toHaveLength(0);
+    expect(document.body.textContent).not.toMatch(/model|demo|reference configuration/i);
   });
 });
