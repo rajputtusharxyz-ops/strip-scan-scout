@@ -6,7 +6,7 @@ function read(): Scan[] {
   if (typeof window === "undefined") return [];
   try {
     const raw = window.localStorage.getItem(STORAGE_KEY);
-    return raw ? (JSON.parse(raw) as Scan[]) : [];
+    return raw ? (JSON.parse(raw) as Scan[]).filter((s) => s && s.analysis) : [];
   } catch {
     return [];
   }

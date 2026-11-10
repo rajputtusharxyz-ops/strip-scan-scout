@@ -58,7 +58,6 @@ function ScanPage() {
 
   async function analyse() {
     setStage("processing");
-    await new Promise((r) => setTimeout(r, 600));
     try {
       await runAnalysis();
       navigate({ to: "/results" });
@@ -141,7 +140,7 @@ function ScanPage() {
         <>
           <ProgressHeader step={4} label="Confirm pad areas" onBack={() => setStage("check")} />
           <h1 className="text-2xl font-bold">Confirm the two pad outlines</h1>
-          <p className="mt-2 text-muted-foreground">We found the strip and both colour pads. We will sample the colour inside these areas. Confirm that each outline covers only its coloured pad, not the white strip. Drag to move; use the round handle to resize.</p>
+          <p className="mt-2 text-muted-foreground">Check that the strip and both pads are clearly visible and that only one strip is in the photo. The analysis service locates the albumin and creatinine pads itself; these outlines are for your review.</p>
           <div className="mt-5">
             <StripOverlayEditor image={session.image} bounds={session.bounds} onChange={(bounds) => scanSession.update({ bounds })} />
           </div>
@@ -152,15 +151,17 @@ function ScanPage() {
           <div className="mt-6 grid gap-2.5 sm:grid-cols-3">
             <Button size="lg" variant="ghost" onClick={() => setStage("check")}>Back</Button>
             <Button size="lg" variant="outline" onClick={() => setStage("capture")}><RotateCcw strokeWidth={1.5} /> Retake photo</Button>
-            <Button size="lg" onClick={analyse}>Analyse colours</Button>
+            <Button size="lg" onClick={analyse}>Analyse</Button>
           </div>
+          <p className="mt-3 text-sm text-muted-foreground">Your photo is sent securely to the analysis service for this scan and is not saved by default.</p>
         </>
       )}
 
       {stage === "processing" && (
         <div className="card-surface mt-10 flex flex-col items-center p-10 text-center" role="status" aria-live="polite">
           <Loader2 className="h-8 w-8 animate-spin text-primary" strokeWidth={1.5} aria-hidden="true" />
-          <p className="mt-4 font-semibold">Checking pad colours against the selected reference configuration…</p>
+          <p className="mt-4 font-semibold">Analysing your strip…</p>
+          <p className="mt-1 text-sm text-muted-foreground">This usually takes a few seconds.</p>
         </div>
       )}
     </PageContainer>
