@@ -91,8 +91,8 @@
   --input: oklch(0.88 0.01 170);
   --ring: oklch(0.48 0.07 189);
   --shadow-soft: 0 1px 2px oklch(0.31 0.04 222 / 4%), 0 4px 16px -6px oklch(0.31 0.04 222 / 8%);
-  --font-heading: "Manrope", ui-sans-serif, system-ui, sans-serif;
-  --font-body: "Source Sans 3", ui-sans-serif, system-ui, sans-serif;
+  --font-heading: "Newsreader", "Iowan Old Style", Georgia, "Times New Roman", serif;
+  --font-body: "Alegreya Sans", "Segoe UI", system-ui, -apple-system, sans-serif;
   --chart-1: oklch(0.48 0.07 189);
   --chart-2: oklch(0.55 0.11 70);
   --chart-3: oklch(0.31 0.04 222);
@@ -120,12 +120,13 @@
     color: var(--color-foreground);
     font-family: var(--font-body);
     font-size: 1rem;
-    line-height: 1.55;
+    line-height: 1.6;
     -webkit-font-smoothing: antialiased;
   }
   h1, h2, h3, h4 {
     font-family: var(--font-heading);
-    letter-spacing: -0.015em;
+    letter-spacing: -0.005em;
+    font-weight: 560;
     line-height: 1.2;
   }
   :focus-visible {

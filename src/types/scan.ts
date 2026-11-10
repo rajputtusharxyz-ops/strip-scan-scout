@@ -1,4 +1,5 @@
 import type { PadId } from "./referenceConfig";
+import type { AnalysisResponse } from "./analysis";
 
 export type Bounds = { x: number; y: number; width: number; height: number }; // normalized 0–1
 
@@ -19,24 +20,14 @@ export type QualityReport = {
   passed: boolean;
 };
 
-export type PadResult = {
-  id: PadId;
-  bounds: Bounds;
-  sampledColor: string;
-  resultLevel?: string;
-  matchConfidence?: number;
-};
-
-export type ResultState = "estimate-available" | "needs-better-photo" | "cannot-analyse";
+export type { PadId };
 
 export type Scan = {
   id: string;
   createdAt: string;
   source: "camera" | "upload";
-  image?: string;
+  image?: string | undefined;
   quality: { score: number; label: QualityReport["label"]; checks: QualityCheck[] };
-  configuration: { id: string; status: "demo" | "validated"; lotNumber?: string };
-  pads: PadResult[];
-  state: ResultState;
+  analysis: AnalysisResponse;
   savedConsent?: "result-only" | "result-and-photo";
 };

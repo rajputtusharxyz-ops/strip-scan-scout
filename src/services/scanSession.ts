@@ -7,15 +7,14 @@ import type { PadId } from "@/types/referenceConfig";
 import { getPixels, loadImage } from "@/lib/image";
 import { detectStrip } from "./stripDetection";
 import { assessQuality } from "./imageQuality";
-import { matchPads } from "./colorMatching";
-import { getActiveConfiguration } from "./referenceConfigService";
+import { analyzeImage } from "./analysisApi";
 
 export type Session = {
   image?: string;
   source?: "camera" | "upload";
   quality?: QualityReport;
   bounds?: Record<PadId, Bounds>;
-  result?: Scan;
+  result?: Scan | undefined;
 };
 
 let session: Session = {};
@@ -50,24 +49,19 @@ export async function runQualityCheck(image: string) {
   return { quality, bounds: defaults };
 }
 
-export async function runAnalysis(): Promise<Scan> {
-  const { image, bounds, quality, source } = session;
-  if (!image || !bounds || !quality) throw new Error("No photo to analyse.");
-  const img = await loadImage(image);
-  const px = getPixels(img, ANALYSIS_SIDE);
-  const config = getActiveConfiguration();
-  const pads = matchPads(px, bounds, config);
-  const allMatched = pads.every((p) => p.resultLevel);
-  const anySampled = pads.every((p) => p.matchConfidence !== undefined);
+export async function runAnalysis(fetchImpl?: typeof fetch): Promise<Scan> {
+  const { image, quality, source } = session;
+  if (!image || !quality) throw new Error("No photo to analyse.");
+  // Clear any previous result first so stale values can never be shown.
+  set({ ...session, result: undefined });
+  const analysis = await analyzeImage(image, fetchImpl);
   const scan: Scan = {
     id: crypto.randomUUID(),
-    createdAt: new Date().toISOString(),
+    createdAt: analysis.capturedAt,
     source: source ?? "upload",
     image,
     quality: { score: quality.score, label: quality.label, checks: quality.checks },
-    configuration: { id: config.id, status: config.status, lotNumber: config.lotNumber },
-    pads,
-    state: !anySampled ? "cannot-analyse" : allMatched ? "estimate-available" : "needs-better-photo",
+    analysis,
   };
   set({ ...session, result: scan });
   return scan;

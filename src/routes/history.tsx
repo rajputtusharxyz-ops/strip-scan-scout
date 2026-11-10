@@ -7,15 +7,15 @@ import { PageContainer } from "@/components/shared/AppShell";
 import { EmptyState } from "@/components/shared/States";
 import { shareOrDownload } from "@/components/results/ScanResultView";
 import { localHistory } from "@/services/localHistory";
-import { formatCaptured, levelName } from "@/services/summary";
+import { formatCaptured, shortResult } from "@/services/summary";
 import type { Scan } from "@/types/scan";
 
 export const Route = createFileRoute("/history")({
   head: () => ({
     meta: [
-      { title: "Saved scans — StripGuide" },
+      { title: "Saved scans — Cybow2AC Strip App" },
       { name: "description", content: "Scans you chose to save, stored only on this device." },
-      { property: "og:title", content: "Saved scans — StripGuide" },
+      { property: "og:title", content: "Saved scans — Cybow2AC Strip App" },
       { property: "og:description", content: "Local-only, opt-in history of screening estimates." },
     ],
   }),
@@ -38,12 +38,12 @@ function HistoryPage() {
   const navigate = useNavigate();
   return (
     <PageContainer narrow>
-      <h1 className="text-3xl font-bold">Saved scans</h1>
+      <h1 className="text-3xl font-semibold">Saved scans</h1>
       <p className="mt-2 text-muted-foreground">Stored only in this browser. Not a medical record.</p>
       <div className="mt-6">
         {items === null ? null : items.length === 0 ? (
           <EmptyState icon={History} title="No saved scans yet" action={<Button asChild><Link to="/scan">Scan one strip</Link></Button>}>
-            You can use StripGuide without saving anything.
+            You can use Cybow2AC Strip App without saving anything.
           </EmptyState>
         ) : (
           <ul className="space-y-3">
@@ -52,7 +52,7 @@ function HistoryPage() {
                 {s.image ? <img src={s.image} alt="" className="h-14 w-14 rounded-md border object-cover" /> : <span className="grid h-14 w-14 place-items-center rounded-md bg-muted"><History className="h-5 w-5 text-muted-foreground" strokeWidth={1.5} aria-hidden="true" /></span>}
                 <div className="min-w-0 flex-1">
                   <p className="tabular font-semibold">{formatCaptured(s.createdAt)}</p>
-                  <p className="truncate text-sm text-muted-foreground">Pad A: {levelName(s, "pad-a")} · Pad B: {levelName(s, "pad-b")}</p>
+                  <p className="truncate text-sm text-muted-foreground">{shortResult(s)}</p>
                   <p className="text-sm text-muted-foreground">Photo quality: {s.quality.label}</p>
                 </div>
                 <DropdownMenu>
