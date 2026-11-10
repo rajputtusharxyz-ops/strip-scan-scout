@@ -11,9 +11,9 @@ import type { Scan } from "@/types/scan";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "StripGuide — Read one test strip with more confidence" },
+      { title: "Cybow2AC Strip App — Read one test strip with more confidence" },
       { name: "description", content: "Photograph one two-pad urine test strip, check photo quality, confirm the pads and see an educational screening estimate." },
-      { property: "og:title", content: "StripGuide — Read one test strip with more confidence" },
+      { property: "og:title", content: "Cybow2AC Strip App — Read one test strip with more confidence" },
       { property: "og:description", content: "A careful, on-device companion for reading one test strip. Not a diagnosis." },
     ],
   }),
@@ -59,7 +59,7 @@ function Home() {
         </section>
       )}
 
-      <section className="mt-12 grid gap-4 md:grid-cols-3" aria-label="How StripGuide protects you">
+      <section className="mt-12 grid gap-4 md:grid-cols-3" aria-label="How Cybow2AC Strip App protects you">
         {[
           { icon: ScanLine, t: "One strip at a time", d: "A single, clearly framed strip gives the most reliable colour comparison." },
           { icon: Eye, t: "You review before results", d: "Check the photo and confirm both pad outlines before anything is read." },

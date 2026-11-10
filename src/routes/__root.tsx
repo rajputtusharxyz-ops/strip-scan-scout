@@ -80,7 +80,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "StripGuide" },
+      { title: "Cybow2AC Strip App" },
       { name: "description", content: "Photograph one test strip and see an educational screening estimate." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },

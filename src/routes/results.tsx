@@ -13,9 +13,9 @@ export const Route = createFileRoute("/results")({
   validateSearch: (s: Record<string, unknown>): { id?: string } => (typeof s.id === "string" ? { id: s.id } : {}),
   head: () => ({
     meta: [
-      { title: "Your screening estimate — StripGuide" },
+      { title: "Your screening estimate — Cybow2AC Strip App" },
       { name: "description", content: "Demo colour-match estimate for two strip pads, with photo quality and safety guidance." },
-      { property: "og:title", content: "Your screening estimate — StripGuide" },
+      { property: "og:title", content: "Your screening estimate — Cybow2AC Strip App" },
       { property: "og:description", content: "An educational, non-diagnostic screening estimate." },
     ],
   }),

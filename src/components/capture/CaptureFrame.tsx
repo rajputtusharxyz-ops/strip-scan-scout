@@ -111,7 +111,7 @@ export function CaptureFrame({ onCapture, onSample }: { onCapture: (image: strin
         <Button variant="ghost" onClick={() => { stop(); onSample(); }}>
           <Sparkles strokeWidth={1.5} /> Try with a sample photo
         </Button>
-        <p className="text-center text-sm text-muted-foreground">No flash · Your scan is processed on this device in this demo.</p>
+        <p className="text-center text-sm text-muted-foreground">No flash · Your photo is sent securely to the analysis service only when you start analysis.</p>
       </div>
     </div>
   );

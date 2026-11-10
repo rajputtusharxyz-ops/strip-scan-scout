@@ -19,7 +19,7 @@ export function AppShell({ children }: { children: ReactNode }) {
       </a>
       <header className="sticky top-0 z-30 border-b bg-background/95 backdrop-blur">
         <div className="mx-auto flex h-16 max-w-[1180px] items-center justify-between px-5 md:px-10">
-          <Link to="/" aria-label="StripGuide home">
+          <Link to="/" aria-label="Cybow2AC Strip App home">
             <BrandMark />
           </Link>
           <nav aria-label="Main" className="hidden md:block">

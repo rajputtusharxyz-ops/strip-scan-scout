@@ -13,9 +13,9 @@ import type { Scan } from "@/types/scan";
 export const Route = createFileRoute("/history")({
   head: () => ({
     meta: [
-      { title: "Saved scans — StripGuide" },
+      { title: "Saved scans — Cybow2AC Strip App" },
       { name: "description", content: "Scans you chose to save, stored only on this device." },
-      { property: "og:title", content: "Saved scans — StripGuide" },
+      { property: "og:title", content: "Saved scans — Cybow2AC Strip App" },
       { property: "og:description", content: "Local-only, opt-in history of screening estimates." },
     ],
   }),
@@ -43,7 +43,7 @@ function HistoryPage() {
       <div className="mt-6">
         {items === null ? null : items.length === 0 ? (
           <EmptyState icon={History} title="No saved scans yet" action={<Button asChild><Link to="/scan">Scan one strip</Link></Button>}>
-            You can use StripGuide without saving anything.
+            You can use Cybow2AC Strip App without saving anything.
           </EmptyState>
         ) : (
           <ul className="space-y-3">

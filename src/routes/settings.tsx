@@ -13,9 +13,9 @@ import { FEEDBACK_URL } from "@/config/app";
 export const Route = createFileRoute("/settings")({
   head: () => ({
     meta: [
-      { title: "Settings — StripGuide" },
-      { name: "description", content: "Privacy controls, reference configuration and local data for StripGuide." },
-      { property: "og:title", content: "Settings — StripGuide" },
+      { title: "Settings — Cybow2AC Strip App" },
+      { name: "description", content: "Privacy controls, reference configuration and local data for Cybow2AC Strip App." },
+      { property: "og:title", content: "Settings — Cybow2AC Strip App" },
       { property: "og:description", content: "Manage local data and see the active reference configuration." },
     ],
   }),

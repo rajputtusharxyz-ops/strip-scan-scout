@@ -18,7 +18,7 @@ import { downscaleDataUrl } from "@/lib/image";
 export function shareOrDownload(scan: Scan) {
   const text = buildSummary(scan);
   if (navigator.share) {
-    navigator.share({ title: "StripGuide summary", text }).catch(() => {});
+    navigator.share({ title: "Cybow2AC Strip App summary", text }).catch(() => {});
     return;
   }
   const url = URL.createObjectURL(new Blob([text], { type: "text/plain" }));
@@ -114,7 +114,7 @@ export function ScanResultView({ scan, saved = false }: { scan: Scan; saved?: bo
           <ChevronDown className="h-5 w-5 transition-transform duration-200 group-data-[state=open]:rotate-180" strokeWidth={1.5} aria-hidden="true" />
         </CollapsibleTrigger>
         <CollapsibleContent className="px-5 pb-5 leading-relaxed text-foreground/85">
-          Colour-based strip readings change with lighting, the time since dipping, how the strip was stored and handled, and how each phone camera processes colour. A plain white background helps but is not a calibrated reference. Until a validated, lot-specific configuration and calibration procedure are in place, StripGuide only shows demo levels.
+          Colour-based strip readings change with lighting, the time since dipping, how the strip was stored and handled, and how each phone camera processes colour. A plain white background helps but is not a calibrated reference. Until a validated, lot-specific configuration and calibration procedure are in place, Cybow2AC Strip App only shows demo levels.
         </CollapsibleContent>
       </Collapsible>
 

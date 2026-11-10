@@ -15,9 +15,9 @@ import { createSamplePhoto, runAnalysis, runQualityCheck, scanSession, useScanSe
 export const Route = createFileRoute("/scan")({
   head: () => ({
     meta: [
-      { title: "Scan one strip — StripGuide" },
+      { title: "Scan one strip — Cybow2AC Strip App" },
       { name: "description", content: "Prepare, capture, check and confirm one test strip photo before seeing a screening estimate." },
-      { property: "og:title", content: "Scan one strip — StripGuide" },
+      { property: "og:title", content: "Scan one strip — Cybow2AC Strip App" },
       { property: "og:description", content: "A guided four-step capture flow for one test strip." },
     ],
   }),
@@ -74,7 +74,7 @@ function ScanPage() {
         <>
           <ProgressHeader step={1} label="Prepare" />
           <h1 className="text-3xl font-bold">Before you take the photo</h1>
-          <p className="mt-2 text-muted-foreground">StripGuide reads <strong className="text-foreground">one strip per photo</strong>. A few checks now prevent unusable images.</p>
+          <p className="mt-2 text-muted-foreground">Cybow2AC Strip App reads <strong className="text-foreground">one strip per photo</strong>. A few checks now prevent unusable images.</p>
           <ol className="mt-6 space-y-3">
             {CHECKLIST.map((c, i) => (
               <li key={c.t} className="card-surface flex gap-4 p-4">
