@@ -67,45 +67,45 @@
 }
 
 :root {
-  --radius: 0.75rem;
-  --background: oklch(0.973 0.007 95);
-  --foreground: oklch(0.31 0.04 222);
+  --radius: 0.625rem;
+  --background: oklch(0.978 0.001 197);
+  --foreground: oklch(0.276 0.023 249);
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.31 0.04 222);
+  --card-foreground: oklch(0.276 0.023 249);
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.31 0.04 222);
-  --primary: oklch(0.48 0.07 189);
-  --primary-foreground: oklch(0.99 0.004 95);
-  --secondary: oklch(0.935 0.022 175);
-  --secondary-foreground: oklch(0.31 0.04 222);
-  --muted: oklch(0.955 0.008 110);
-  --muted-foreground: oklch(0.52 0.015 220);
-  --accent: oklch(0.935 0.022 175);
-  --accent-foreground: oklch(0.31 0.04 222);
-  --destructive: oklch(0.5 0.13 28);
-  --destructive-foreground: oklch(0.99 0.004 95);
-  --caution: oklch(0.55 0.11 70);
-  --caution-surface: oklch(0.97 0.035 85);
-  --caution-border: oklch(0.88 0.07 80);
-  --border: oklch(0.9 0.008 170);
-  --input: oklch(0.88 0.01 170);
-  --ring: oklch(0.48 0.07 189);
-  --shadow-soft: 0 1px 2px oklch(0.31 0.04 222 / 4%), 0 4px 16px -6px oklch(0.31 0.04 222 / 8%);
-  --font-heading: "Newsreader", "Iowan Old Style", Georgia, "Times New Roman", serif;
-  --font-body: "Alegreya Sans", "Segoe UI", system-ui, -apple-system, sans-serif;
-  --chart-1: oklch(0.48 0.07 189);
-  --chart-2: oklch(0.55 0.11 70);
-  --chart-3: oklch(0.31 0.04 222);
-  --chart-4: oklch(0.7 0.05 175);
-  --chart-5: oklch(0.52 0.015 220);
+  --popover-foreground: oklch(0.276 0.023 249);
+  --primary: oklch(0.437 0.057 245);
+  --primary-foreground: oklch(1 0 0);
+  --secondary: oklch(0.959 0.005 229);
+  --secondary-foreground: oklch(0.276 0.023 249);
+  --muted: oklch(0.959 0.005 229);
+  --muted-foreground: oklch(0.548 0.022 241);
+  --accent: oklch(0.959 0.005 229);
+  --accent-foreground: oklch(0.276 0.023 249);
+  --destructive: oklch(0.503 0.143 24);
+  --destructive-foreground: oklch(1 0 0);
+  --caution: oklch(0.503 0.143 24);
+  --caution-surface: oklch(0.969 0.015 17);
+  --caution-border: oklch(0.897 0.009 243);
+  --border: oklch(0.897 0.009 243);
+  --input: oklch(0.897 0.009 243);
+  --ring: oklch(0.467 0.099 250);
+  --shadow-soft: none;
+  --font-heading: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --chart-1: oklch(0.437 0.057 245);
+  --chart-2: oklch(0.548 0.022 241);
+  --chart-3: oklch(0.276 0.023 249);
+  --chart-4: oklch(0.897 0.009 243);
+  --chart-5: oklch(0.467 0.099 250);
   --sidebar: oklch(1 0 0);
-  --sidebar-foreground: oklch(0.31 0.04 222);
-  --sidebar-primary: oklch(0.48 0.07 189);
-  --sidebar-primary-foreground: oklch(0.99 0.004 95);
-  --sidebar-accent: oklch(0.935 0.022 175);
-  --sidebar-accent-foreground: oklch(0.31 0.04 222);
-  --sidebar-border: oklch(0.9 0.008 170);
-  --sidebar-ring: oklch(0.48 0.07 189);
+  --sidebar-foreground: oklch(0.276 0.023 249);
+  --sidebar-primary: oklch(0.437 0.057 245);
+  --sidebar-primary-foreground: oklch(1 0 0);
+  --sidebar-accent: oklch(0.959 0.005 229);
+  --sidebar-accent-foreground: oklch(0.276 0.023 249);
+  --sidebar-border: oklch(0.897 0.009 243);
+  --sidebar-ring: oklch(0.467 0.099 250);
 }
 
 @layer base {
@@ -125,8 +125,8 @@
   }
   h1, h2, h3, h4 {
     font-family: var(--font-heading);
-    letter-spacing: -0.005em;
-    font-weight: 560;
+    letter-spacing: -0.01em;
+    font-weight: 600;
     line-height: 1.2;
   }
   :focus-visible {
@@ -149,7 +149,7 @@
 }
 
 @utility tabular {
-  font-variant-numeric: tabular-nums;
+  font-variant-numeric: lining-nums tabular-nums;
 }
 
 @utility pb-safe {

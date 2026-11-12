@@ -13,9 +13,9 @@ export const Route = createFileRoute("/results")({
   validateSearch: (s: Record<string, unknown>): { id?: string } => (typeof s.id === "string" ? { id: s.id } : {}),
   head: () => ({
     meta: [
-      { title: "Your screening estimate — Cybow2AC Strip App" },
+      { title: "Result — ACR Strip Reader" },
       { name: "description", content: "Albumin, creatinine and ACR screening estimate from one test strip photo, with safety guidance." },
-      { property: "og:title", content: "Your screening estimate — Cybow2AC Strip App" },
+      { property: "og:title", content: "Result — ACR Strip Reader" },
       { property: "og:description", content: "An educational, non-diagnostic screening estimate." },
     ],
   }),
@@ -36,9 +36,7 @@ function ResultsPage() {
       {scan ? (
         <ScanResultView key={scan.id} scan={scan} saved={!!id} onRetry={id ? undefined : () => { runAnalysis().catch(() => {}); }} />
       ) : (
-        <EmptyState icon={FileSearch} title={id ? "This saved scan is no longer here" : "No result yet"} action={<Button asChild><Link to="/scan"><Camera strokeWidth={1.5} /> Scan one strip</Link></Button>}>
-          {id ? "It may have been deleted from this device." : "Unsaved results disappear when the page is refreshed or closed."}
-        </EmptyState>
+        <EmptyState icon={FileSearch} title="No result" action={<Button asChild><Link to="/scan"><Camera strokeWidth={1.5} /> Scan strip</Link></Button>} />
       )}
     </PageContainer>
   );

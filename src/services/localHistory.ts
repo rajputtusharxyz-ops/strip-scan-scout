@@ -14,7 +14,7 @@ function read(): Scan[] {
 
 function write(scans: Scan[]) {
   window.localStorage.setItem(STORAGE_KEY, JSON.stringify(scans));
-  window.dispatchEvent(new Event("stripguide-history"));
+  window.dispatchEvent(new Event("acr-history"));
 }
 
 export const localHistory = {
@@ -30,6 +30,6 @@ export const localHistory = {
   },
   clear() {
     window.localStorage.removeItem(STORAGE_KEY);
-    window.dispatchEvent(new Event("stripguide-history"));
+    window.dispatchEvent(new Event("acr-history"));
   },
 };

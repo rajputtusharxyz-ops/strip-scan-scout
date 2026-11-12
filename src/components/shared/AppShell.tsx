@@ -7,7 +7,7 @@ const NAV = [
   { to: "/", label: "Home", icon: Home },
   { to: "/scan", label: "Scan", icon: Camera },
   { to: "/guide", label: "Guide", icon: BookOpen },
-  { to: "/history", label: "History", icon: History },
+  { to: "/history", label: "Saved", icon: History },
   { to: "/settings", label: "Settings", icon: Settings },
 ] as const;
 
@@ -17,9 +17,9 @@ export function AppShell({ children }: { children: ReactNode }) {
       <a href="#main" className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:bg-card focus:px-3 focus:py-2">
         Skip to content
       </a>
-      <header className="sticky top-0 z-30 border-b bg-background/95 backdrop-blur">
+      <header className="sticky top-0 z-30 border-b bg-background">
         <div className="mx-auto flex h-16 max-w-[1180px] items-center justify-between px-5 md:px-10">
-          <Link to="/" aria-label="Cybow2AC Strip App home">
+          <Link to="/" aria-label="ACR Strip Reader home">
             <BrandMark />
           </Link>
           <nav aria-label="Main" className="hidden md:block">

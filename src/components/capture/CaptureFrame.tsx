@@ -1,12 +1,12 @@
 import { useEffect, useRef, useState } from "react";
-import { Camera, CameraOff, ImageUp, RefreshCw, Sparkles } from "lucide-react";
+import { Camera, CameraOff, ImageUp, RefreshCw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ErrorState } from "@/components/shared/States";
 import { readFileAsDataUrl } from "@/lib/image";
 
 type CamState = "idle" | "starting" | "live" | "denied" | "unsupported";
 
-export function CaptureFrame({ onCapture, onSample }: { onCapture: (image: string, source: "camera" | "upload") => void; onSample: () => void }) {
+export function CaptureFrame({ onCapture }: { onCapture: (image: string, source: "camera" | "upload") => void }) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const streamRef = useRef<MediaStream | null>(null);
   const fileRef = useRef<HTMLInputElement>(null);
@@ -66,17 +66,14 @@ export function CaptureFrame({ onCapture, onSample }: { onCapture: (image: strin
             {cam === "starting" ? <p className="text-muted-foreground" role="status">Opening camera…</p> : null}
           </div>
         )}
-        {/* Alignment guide: one vertical strip with two pad zones near the top */}
-        <div aria-hidden="true" className="pointer-events-none absolute inset-0 flex justify-center">
-          <div className="mt-[10%] h-[80%] w-[16%] rounded-md border-2 border-dashed border-primary/70">
-            <div className="mx-[12%] mt-[18%] aspect-square rounded-sm border-2 border-primary/80 bg-primary/10" />
-            <div className="mx-[12%] mt-[14%] aspect-square rounded-sm border-2 border-primary/80 bg-primary/10" />
-          </div>
+        {/* Alignment guide: small, thin, upper-middle; outline only so it never covers real pads */}
+        <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-[8%] flex justify-center">
+          <div className="h-[16rem] max-h-[60%] w-10 rounded border border-dashed border-card/80" />
         </div>
       </div>
 
       <p className="text-center text-muted-foreground" aria-live="polite">
-        Centre one strip. Keep the two colour pads sharp and fully visible.
+        Keep both pads fully visible and in focus.
       </p>
 
       {cam === "denied" && (
@@ -108,10 +105,7 @@ export function CaptureFrame({ onCapture, onSample }: { onCapture: (image: strin
           <ImageUp strokeWidth={1.5} /> Upload photo
         </Button>
         <input ref={fileRef} type="file" accept="image/*" className="sr-only" aria-label="Upload a photo of one strip" onChange={onFile} tabIndex={-1} />
-        <Button variant="ghost" onClick={() => { stop(); onSample(); }}>
-          <Sparkles strokeWidth={1.5} /> Try with a sample photo
-        </Button>
-        <p className="text-center text-sm text-muted-foreground">No flash · Your photo is sent securely to the analysis service only when you start analysis.</p>
+        <p className="text-center text-sm text-muted-foreground">Your photo is sent securely for analysis and is not saved.</p>
       </div>
     </div>
   );

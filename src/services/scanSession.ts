@@ -66,16 +66,3 @@ export async function runAnalysis(fetchImpl?: typeof fetch): Promise<Scan> {
   set({ ...session, result: scan });
   return scan;
 }
-
-/** Draws a clean synthetic strip photo so the full flow can be tried without a real strip. */
-export function createSamplePhoto(): string {
-  const c = document.createElement("canvas");
-  c.width = 720; c.height = 1080;
-  const ctx = c.getContext("2d")!;
-  ctx.fillStyle = "#F2F1EE"; ctx.fillRect(0, 0, c.width, c.height);
-  ctx.fillStyle = "rgba(0,0,0,0.06)"; ctx.fillRect(318, 136, 96, 820);
-  ctx.fillStyle = "#FBFBFA"; ctx.fillRect(312, 130, 96, 820);
-  ctx.fillStyle = "#BBD4C9"; ctx.fillRect(322, 170, 76, 76);
-  ctx.fillStyle = "#E6DC9C"; ctx.fillRect(322, 270, 76, 76);
-  return c.toDataURL("image/jpeg", 0.92);
-}
