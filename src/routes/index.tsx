@@ -3,7 +3,6 @@ import { Camera } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { PageContainer } from "@/components/shared/AppShell";
 import { StripIllustration } from "@/components/shared/StripIllustration";
-import { SafetyNotice } from "@/components/shared/SafetyNotice";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -26,7 +25,6 @@ function Home() {
         <p className="mt-3 text-lg text-muted-foreground">Capture one strip to begin</p>
         <Button size="lg" className="mt-8" asChild><Link to="/scan"><Camera strokeWidth={1.5} /> Scan strip</Link></Button>
       </section>
-      <SafetyNotice className="mx-auto mt-12 max-w-md justify-center" />
     </PageContainer>
   );
 }

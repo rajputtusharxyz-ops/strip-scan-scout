@@ -6,7 +6,6 @@ import { Button } from "@/components/ui/button";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import { PageContainer } from "@/components/shared/AppShell";
 import { localHistory } from "@/services/localHistory";
-import { FEEDBACK_URL } from "@/config/app";
 
 export const Route = createFileRoute("/settings")({
   head: () => ({
@@ -53,9 +52,6 @@ function SettingsPage() {
           </AlertDialogContent>
         </AlertDialog>
       </section>
-      {FEEDBACK_URL && (
-        <a href={FEEDBACK_URL} target="_blank" rel="noopener noreferrer" className="mt-8 inline-flex min-h-11 items-center text-sm text-muted-foreground underline-offset-4 hover:underline">Send feedback</a>
-      )}
     </PageContainer>
   );
 }

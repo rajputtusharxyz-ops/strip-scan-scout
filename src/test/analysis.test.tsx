@@ -61,7 +61,7 @@ describe("results screen", () => {
   });
   it("shows the unavailable state with no values", async () => {
     renderInRouter(<ScanResultView scan={scanWith(normalizeResponse({ ...ok, status: "analysis_unavailable" }))} onRetry={() => {}} />);
-    expect(await screen.findByText("Analysis service is unavailable")).toBeInTheDocument();
+    expect(await screen.findByText("Analysis is unavailable right now. Please try again later.")).toBeInTheDocument();
     expect(screen.queryByTestId("result-values")).toBeNull();
   });
 });
@@ -81,7 +81,7 @@ describe("settings", () => {
   it("exposes no model, demo or configuration controls", async () => {
     const Settings = SettingsRoute.options.component!;
     renderInRouter(<Settings />);
-    await screen.findByText("Analysis service");
+    await screen.findByText("Saved scans");
     expect(screen.queryAllByRole("switch")).toHaveLength(0);
     expect(screen.queryAllByRole("combobox")).toHaveLength(0);
     expect(screen.queryAllByRole("radio")).toHaveLength(0);
