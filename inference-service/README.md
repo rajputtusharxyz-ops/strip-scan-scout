@@ -8,10 +8,14 @@ The web app reads its address from the `VITE_ANALYSIS_API_URL` build variable.
 `helper.py` wins — reconcile before deploying.
 
 ## Private model assets (not in this repo)
-Place in `weights/` (or set `WEIGHTS_DIR`):
-- `yolov8m_custom3.pt`
-- `Al_runs/run_019/best_checkpoint.pt`
-- `Cr_runs/run_001/best_checkpoint.pt`
+Download them into `weights/` with one command:
+
+    pip install gdown
+    python download_weights.py
+
+This places `weights/crop_model.pt`, `weights/al_model.pt`, `weights/cr_model.pt`
+(the older names `yolov8m_custom3.pt`, `Al_runs/run_019/best_checkpoint.pt`,
+`Cr_runs/run_001/best_checkpoint.pt` still work). Set `WEIGHTS_DIR` to use another folder.
 
 ## Run
     pip install -r requirements.txt

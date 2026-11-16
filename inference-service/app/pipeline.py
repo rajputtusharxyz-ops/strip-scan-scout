@@ -10,6 +10,15 @@ WEIGHTS_DIR = os.environ.get("WEIGHTS_DIR", os.path.join(os.path.dirname(__file_
 YOLO_PATH = "yolov8m_custom3.pt"
 AL_CKPT = "Al_runs/run_019/best_checkpoint.pt"
 CR_CKPT = "Cr_runs/run_001/best_checkpoint.pt"
+
+
+def _resolve(*names: str) -> str:
+    """Return the first existing weights file; new names first, old layout as fallback."""
+    for n in names:
+        path = os.path.join(WEIGHTS_DIR, n)
+        if os.path.exists(path):
+            return path
+    return os.path.join(WEIGHTS_DIR, names[0])
 CONF_THRESHOLD = 0.5
 IOU_THRESHOLD = 0.7
 AL_MEAN, AL_STD = 131.44553072625698, 136.77374925625233
@@ -61,9 +70,9 @@ class Pipeline:
         from ultralytics import YOLO
         self.torch = torch
         self.device = "cuda" if torch.cuda.is_available() else "cpu"
-        self.yolo = YOLO(os.path.join(WEIGHTS_DIR, YOLO_PATH))
-        self.al = self._load_regressor(os.path.join(WEIGHTS_DIR, AL_CKPT))
-        self.cr = self._load_regressor(os.path.join(WEIGHTS_DIR, CR_CKPT))
+        self.yolo = YOLO(_resolve("crop_model.pt", YOLO_PATH))
+        self.al = self._load_regressor(_resolve("al_model.pt", AL_CKPT))
+        self.cr = self._load_regressor(_resolve("cr_model.pt", CR_CKPT))
 
     def _load_regressor(self, path: str):
         import timm
